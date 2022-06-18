@@ -51,12 +51,14 @@ class _ScannerAppState extends State<ScannerApp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     ElevatedButton(
-                        onPressed: () => scanBarcode(),
-                        child: Text("Scan Barcode")),
-                    Text(
-                      'Scan Result: $_scannedBarcode\n',
-                      style: TextStyle(fontSize: 20),
-                    )
+                        onPressed: () => {
+                              Navigator.push(
+                                  ctx,
+                                  MaterialPageRoute(
+                                      builder: (ctx) =>
+                                          InfoScreen(barcode: _scannedBarcode)))
+                            },
+                        child: const Text("Scan Barcode")),
                   ],
                 ),
               );
@@ -64,15 +66,9 @@ class _ScannerAppState extends State<ScannerApp> {
   }
 }
 
-class ScanButton extends StatelessWidget {
-  const ScanButton({required this.onPressed, super.key});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext ctx) {
-    return ElevatedButton(onPressed: onPressed, child: const Text("Scan"));
-  }
+class InfoScreen extends StatelessWidget {
+  const InfoScreen({required barcode, super.key})
+  //TODO
 }
 
 void main() {
