@@ -52,12 +52,13 @@ class _ScannerAppState extends State<ScannerApp> {
                   children: <Widget>[
                     ElevatedButton(
                         onPressed: () => {
-                              Navigator.push(
-                                  ctx,
-                                  MaterialPageRoute(
-                                      builder: (ctx) =>
-                                          InfoScreen(barcode: _scannedBarcode)))
-                            },
+                          scanBarcode(),
+                          Navigator.push(
+                              ctx,
+                              MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      InfoScreen(barcode: _scannedBarcode)))
+                        },
                         child: const Text("Scan Barcode")),
                   ],
                 ),
@@ -67,9 +68,52 @@ class _ScannerAppState extends State<ScannerApp> {
 }
 
 class InfoScreen extends StatelessWidget {
-  const InfoScreen({required barcode, super.key})
-  //TODO
+  final String barcode;
+  const InfoScreen({required this.barcode, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Item Info'),
+      ),
+      body: Container(
+        child: Column(
+
+             children:  [
+
+                Text(barcode),
+                const TextField(
+                 decoration: InputDecoration(
+                   border: OutlineInputBorder(),
+                   hintText: 'Enter a Item Name',
+                 ),
+               ),
+               const TextField(
+                 decoration: InputDecoration(
+                   border: OutlineInputBorder(),
+                   hintText: 'Enter a Item Price',
+
+                 ),
+               ),
+               ElevatedButton(
+                 onPressed: () {
+                   Navigator.pop(context);
+
+                 },
+                 child:const Text('Add Item'),
+
+               ),
+             ],
+           ),
+      ),
+      );
+  }
+
+
 }
+
+
 
 void main() {
   runApp(ScannerApp());
