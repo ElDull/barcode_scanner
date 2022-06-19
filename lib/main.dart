@@ -51,14 +51,14 @@ class _ScannerAppState extends State<ScannerApp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     ElevatedButton(
-                        onPressed: () => {
-                          scanBarcode(),
-                          Navigator.push(
-                              ctx,
-                              MaterialPageRoute(
-                                  builder: (ctx) =>
-                                      InfoScreen(barcode: _scannedBarcode)))
-                        },
+                        onPressed: () async => {
+                              await scanBarcode(),
+                              Navigator.push(
+                                  ctx,
+                                  MaterialPageRoute(
+                                      builder: (ctx) =>
+                                          InfoScreen(barcode: _scannedBarcode)))
+                            },
                         child: const Text("Scan Barcode")),
                   ],
                 ),
@@ -79,41 +79,32 @@ class InfoScreen extends StatelessWidget {
       ),
       body: Container(
         child: Column(
-
-             children:  [
-
-                Text(barcode),
-                const TextField(
-                 decoration: InputDecoration(
-                   border: OutlineInputBorder(),
-                   hintText: 'Enter a Item Name',
-                 ),
-               ),
-               const TextField(
-                 decoration: InputDecoration(
-                   border: OutlineInputBorder(),
-                   hintText: 'Enter a Item Price',
-
-                 ),
-               ),
-               ElevatedButton(
-                 onPressed: () {
-                   Navigator.pop(context);
-
-                 },
-                 child:const Text('Add Item'),
-
-               ),
-             ],
-           ),
+          children: [
+            Text(barcode),
+            const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter a Item Name',
+              ),
+            ),
+            const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter a Item Price',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Add Item'),
+            ),
+          ],
+        ),
       ),
-      );
+    );
   }
-
-
 }
-
-
 
 void main() {
   runApp(ScannerApp());
