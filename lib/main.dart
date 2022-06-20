@@ -1,8 +1,16 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:scanner_flutter/FirestoreDB.dart';
+import 'package:scanner_flutter/InfoScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import './InfoScreen.dart';
 
 class ScannerApp extends StatefulWidget {
   @override
@@ -22,7 +30,7 @@ class _ScannerAppState extends State<ScannerApp> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           "#ff6666", "Cancel Scan", true, ScanMode.BARCODE);
-      print(barcodeScanRes);
+      log(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = "Failed to get platform version.";
     }
@@ -67,45 +75,10 @@ class _ScannerAppState extends State<ScannerApp> {
   }
 }
 
-class InfoScreen extends StatelessWidget {
-  final String barcode;
-  const InfoScreen({required this.barcode, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Item Info'),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Text(barcode),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a Item Name',
-              ),
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a Item Price',
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Add Item'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  var fire = FirestoreDB();
+  await fire.getAllItems();
   runApp(ScannerApp());
 }
