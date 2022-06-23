@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanner_flutter/ItemList.dart';
 import 'InfoScreen.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 
 class ScannerApp extends StatefulWidget {
   @override
@@ -54,21 +54,25 @@ class _ScannerAppState extends State<ScannerApp> {
                   children: <Widget>[
                     ElevatedButton(
                         onPressed: () async => {
-                          await scanBarcode(),
-                          Navigator.push(
-                              ctx,
-                              MaterialPageRoute(
-                                  builder: (ctx) =>
-                                      InfoScreen(barcode: _scannedBarcode)))
-                        },
+                              await scanBarcode(),
+                              Navigator.push(
+                                  ctx,
+                                  MaterialPageRoute(
+                                      builder: (ctx) =>
+                                          InfoScreen(barcode: _scannedBarcode)))
+                            },
                         child: const Text("Scan Barcode")),
+                    ElevatedButton(
+                        onPressed: () => {
+                              Navigator.push(
+                                  ctx,
+                                  MaterialPageRoute(
+                                      builder: (ctx) => ItemList()))
+                            },
+                        child: const Text("View Items"))
                   ],
                 ),
               );
             })));
   }
-}
-
-void main() {
-  runApp(ScannerApp());
 }

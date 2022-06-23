@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanner_flutter/ItemList.dart';
 import 'package:scanner_flutter/ViewItems.dart';
 
 class InfoScreen extends StatelessWidget {
@@ -30,8 +31,10 @@ class InfoScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const ViewItems(barcode: '')),);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ItemList()),
+                );
               },
               child: const Text('Add Item'),
             ),
@@ -41,17 +44,20 @@ class InfoScreen extends StatelessWidget {
     );
   }
 }
-class ItemsModel{
+
+class ItemsModel {
   final String ItemName;
   final String ItemPrice;
   final String ItemCode;
 
-  ItemsModel({required this.ItemName,
-    required this.ItemPrice,
-    required this.ItemCode
-
-  });
-  factory ItemsModel.fromDocument(DocumentSnapshot doc){
-    return ItemsModel(ItemName: doc['ItemName'], ItemPrice: doc['ItemPrice'], ItemCode:doc['ItemCode']);
+  ItemsModel(
+      {required this.ItemName,
+      required this.ItemPrice,
+      required this.ItemCode});
+  factory ItemsModel.fromDocument(DocumentSnapshot doc) {
+    return ItemsModel(
+        ItemName: doc['ItemName'],
+        ItemPrice: doc['ItemPrice'],
+        ItemCode: doc['ItemCode']);
   }
 }

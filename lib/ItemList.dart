@@ -16,8 +16,9 @@ class _ItemListState extends State<ItemList> {
 
   @override
   Widget build(BuildContext ctx) {
-    return Material(
-        child: StreamBuilder<QuerySnapshot>(
+    return Scaffold(
+        appBar: AppBar(title: const Text("Item View")),
+        body: StreamBuilder<QuerySnapshot>(
             stream: _itemStream,
             builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
