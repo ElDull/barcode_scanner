@@ -19,3 +19,7 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+# secrets
+android/app/google-services.json
+lib/firebase_options
